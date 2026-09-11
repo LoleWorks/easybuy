@@ -38,12 +38,31 @@ export async function onRequestPost({ request, env }) {
   };
 
   try {
+    const result = await postToSheet(payload);
+    if (!result.ok) {
+      return json({ ok: false, error: "sheet_write_failed", detail: result.text }, 502);
+    }
+    return json({ ok: true, sheet_response: result.text }, 200);
+  } catch (err) {
+    return json({ ok: false, error: "sheet_unreachable" }, 502);
+  }
+}
+
+// Apps Script's /exec URL occasionally 302-redirects a POST to its
+// content-serving domain; when a fetch client follows that redirect it
+// turns into a GET, losing the body, which hits the (nonexistent) doGet
+// and returns an HTML error page instead of our JSON. Retrying the plain
+// POST reliably succeeds, so retry a couple of times before giving up.
+async function postToSheet(payload, maxAttempts = 3) {
+  let lastText = "";
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     const upstream = await fetch(SHEET_WEBHOOK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
     const text = await upstream.text();
+    lastText = text;
 
     let parsed;
     try {
@@ -51,15 +70,15 @@ export async function onRequestPost({ request, env }) {
     } catch {
       parsed = null;
     }
-    const sheetOk = upstream.ok && !(parsed && parsed.status === "error");
 
-    if (!sheetOk) {
-      return json({ ok: false, error: "sheet_write_failed", detail: text }, 502);
+    if (parsed === null && attempt < maxAttempts) {
+      await new Promise((resolve) => setTimeout(resolve, 300 * attempt));
+      continue;
     }
-    return json({ ok: true, sheet_response: text }, 200);
-  } catch (err) {
-    return json({ ok: false, error: "sheet_unreachable" }, 502);
+
+    return { ok: upstream.ok && !!parsed && parsed.status !== "error", text };
   }
+  return { ok: false, text: lastText };
 }
 
 function json(data, status) {
