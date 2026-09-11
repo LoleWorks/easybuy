@@ -1,4 +1,4 @@
-import logo from "../assets/logo.jpg";
+import logo from "../assets/logo.png";
 
 export default function Nav({ t, lang, setLang, onHow, onPricing, onForm }) {
   return (

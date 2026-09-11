@@ -14,7 +14,7 @@ export default function Hero({ t, onCta, onSecondary, onScrollHint }) {
         </div>
       </div>
       <div className="hero-right">
-        <img src={bottle15} alt="Bilbor 1,5L" className="bottle-photo" style={{ height: 380 }} />
+        <img src={bottle15} alt="Bilbor 1,5L" className="bottle-photo" style={{ height: 460 }} />
       </div>
       <button className="scroll-hint" onClick={onScrollHint}>
         <span>{t.scrollHint}</span>

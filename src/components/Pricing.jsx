@@ -12,7 +12,7 @@ const Pricing = forwardRef(function Pricing({ t, priceRows, offerRows, onSelectO
 
       <div className="plan-row">
         <div className="plan-card">
-          <div className="plan-icon"><img src={bottle1} alt="" className="bottle-photo" style={{ height: 90 }} /></div>
+          <div className="plan-icon"><img src={bottle1} alt="" className="bottle-photo" style={{ height: 100 }} /></div>
           <div className="plan-label">{t.planOnceLabel}</div>
           <div className="plan-price">{t.planOncePrice}</div>
           <div className="plan-body">{t.planOnceBody}</div>
@@ -20,7 +20,7 @@ const Pricing = forwardRef(function Pricing({ t, priceRows, offerRows, onSelectO
         </div>
         <div className="plan-card sub">
           <div className="plan-ribbon">{t.planSubBadge}</div>
-          <div className="plan-icon"><img src={bottle5} alt="" className="bottle-photo" style={{ height: 100 }} /></div>
+          <div className="plan-icon"><img src={bottle5} alt="" className="bottle-photo" style={{ height: 110 }} /></div>
           <div className="plan-label">{t.planSubLabel}</div>
           <div className="plan-price">{t.planSubPrice}</div>
           <div className="plan-body">{t.planSubBody}</div>
