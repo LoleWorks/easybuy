@@ -11,6 +11,20 @@
 const SHEET_WEBHOOK_URL =
   "https://script.google.com/macros/s/AKfycbw_3fj4mVPws74unGDoZZVn91BnMTNUtvDX6HdNjRzVWSw0zdcZjHWtow5tzGoD6Y0n/exec";
 
+// TEMP DEBUG — remove after confirming the env var is wired correctly.
+// Reveals only the length and first/last 2 chars, never the full secret.
+export async function onRequestGet({ env }) {
+  const s = env.GOOGLE_SHEET_SECRET || "";
+  return json(
+    {
+      set: !!env.GOOGLE_SHEET_SECRET,
+      length: s.length,
+      preview: s.length > 4 ? `${s.slice(0, 2)}...${s.slice(-2)}` : s,
+    },
+    200
+  );
+}
+
 export async function onRequestPost({ request, env }) {
   let body;
   try {
