@@ -65,6 +65,7 @@ img { max-width: 100%; }
 .attest-card { max-width: 920px; width: 100%; display: flex; gap: 32px; align-items: flex-start; border: 1px solid var(--tint-border); border-radius: 24px; padding: 40px 44px; background: var(--tint); }
 .attest-check { width: 56px; height: 56px; border-radius: 50%; background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: center; flex: none; font-weight: 700; font-size: 24px; }
 .attest-title { font-weight: 700; font-size: 24px; color: var(--ink); }
+.attest-img { width: 200px; flex: none; align-self: center; border-radius: 16px; box-shadow: 0 20px 40px rgba(7, 22, 47, 0.18); }
 
 .who-row { display: flex; gap: 24px; flex-wrap: wrap; }
 .who-card { flex: 1; min-width: 220px; display: flex; align-items: center; gap: 14px; background: var(--tint); border-radius: 16px; padding: 20px 22px; }
