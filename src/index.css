@@ -167,3 +167,9 @@ img { max-width: 100%; }
   .hero-right { order: -1; min-height: 260px; }
   .attest-card { flex-direction: column; }
 }
+
+@media (max-width: 480px) {
+  .sticky-bar { flex-direction: column; gap: 10px; padding: 14px 6%; }
+  .sticky-text { text-align: center; }
+  .sticky-cta { width: 100%; padding: 12px 28px; }
+}
