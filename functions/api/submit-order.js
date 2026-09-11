@@ -44,7 +44,16 @@ export async function onRequestPost({ request, env }) {
       body: JSON.stringify(payload),
     });
     const text = await upstream.text();
-    if (!upstream.ok) {
+
+    let parsed;
+    try {
+      parsed = JSON.parse(text);
+    } catch {
+      parsed = null;
+    }
+    const sheetOk = upstream.ok && !(parsed && parsed.status === "error");
+
+    if (!sheetOk) {
       return json({ ok: false, error: "sheet_write_failed", detail: text }, 502);
     }
     return json({ ok: true, sheet_response: text }, 200);
